@@ -1,0 +1,42 @@
+package com.example.soldierfit.data.database
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+
+@Database(
+    entities = [
+        TrainingProgram::class,
+        Workout::class,
+        Exercise::class,
+        ExerciseSet::class
+    ],
+    version = 3,
+    exportSchema = false
+)
+@TypeConverters(Converters::class)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun workoutDao(): WorkoutDao
+    abstract fun programDao(): ProgramDao
+
+    companion object {
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
+
+        fun getDatabase(context: Context): AppDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "soldierfit_database"
+                )
+                .fallbackToDestructiveMigration(true)
+                .build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
+}

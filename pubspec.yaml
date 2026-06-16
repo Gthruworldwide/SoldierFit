@@ -1,0 +1,74 @@
+name: soldierfit
+description: Military gamified fitness system with XP progression, AI coach, and seasonal battle pass.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # Firebase
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.16.0
+  cloud_firestore: ^4.14.0
+  firebase_analytics: ^10.7.4
+  
+  # AI
+  openai: ^5.0.0
+  
+  # State Management
+  provider: ^6.1.1
+  riverpod: ^2.4.9
+  
+  # Navigation
+  go_router: ^13.0.0
+  
+  # Animations
+  flutter_animate: ^4.3.0
+  lottie: ^3.0.0
+  
+  # UI Components
+  cupertino_icons: ^1.0.6
+  google_fonts: ^6.1.0
+  flutter_svg: ^2.0.9
+  cached_network_image: ^3.3.1
+  shimmer: ^3.0.0
+  
+  # Utilities
+  shared_preferences: ^2.2.2
+  uuid: ^4.3.3
+  intl: ^0.18.1
+  vibration: ^2.0.0
+  audioplayers: ^5.2.1
+  
+  # HTTP & Networking
+  http: ^1.1.2
+  dio: ^5.4.0
+  
+  # Charts & Analytics
+  fl_chart: ^0.66.0
+  
+  # Web Support
+  universal_html: ^2.2.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  build_runner: ^2.4.8
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/sounds/
+    - assets/animations/
+  
+  fonts:
+    - family: Military
+      fonts:
+        - asset: assets/fonts/military.ttf

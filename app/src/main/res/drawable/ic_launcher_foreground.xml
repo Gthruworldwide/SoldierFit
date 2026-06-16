@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Kettlebell Handle -->
+    <path
+        android:fillColor="#FFB300"
+        android:pathData="M54,26c-7.18,0 -13,5.82 -13,13h5c0,-4.42 3.58,-8 8,-8s8,3.58 8,8h5c0,-7.18 -5.82,-13 -13,-13z" />
+    <!-- Kettlebell Body -->
+    <path
+        android:fillColor="#FFB300"
+        android:pathData="M54,42c-11.05,0 -20,8.95 -20,20s8.95,20 20,20s20,-8.95 20,-20s-8.95,-20 -20,-20z" />
+    <!-- Military Star (Cutout) -->
+    <path
+        android:fillColor="#1B1B1B"
+        android:pathData="M54,70l-4.7,2.47 0.9,-5.23 -3.8,-3.7 5.25,-0.76 2.35,-4.76 2.35,4.76 5.25,0.76 -3.8,3.7 0.9,5.23z" />
+</vector>
