@@ -11,9 +11,10 @@ import androidx.room.TypeConverters
         TrainingProgram::class,
         Workout::class,
         Exercise::class,
-        ExerciseSet::class
+        ExerciseSet::class,
+        CoachInteraction::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

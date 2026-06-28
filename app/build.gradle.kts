@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.jetbrains.kotlin.plugin.serialization)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -76,6 +77,13 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.play.services.location)
     implementation(libs.retrofit)
+    
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:34.14.1"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+    
     testImplementation(libs.androidx.core)
     testImplementation(libs.androidx.junit)
     testImplementation(libs.junit)

@@ -28,6 +28,7 @@ import com.example.soldierfit.data.ProgramRepository
 import com.example.soldierfit.data.UserPreferencesRepository
 import com.example.soldierfit.data.WorkoutRepository
 import com.example.soldierfit.data.database.AppDatabase
+import com.example.soldierfit.data.database.DatabaseInitializer
 import com.example.soldierfit.logic.CoachContext
 import com.example.soldierfit.logic.MilitaryCoachLogic
 import com.example.soldierfit.ui.components.CaptainFitCoach
@@ -57,6 +58,8 @@ import androidx.compose.foundation.border
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.soldierfit.data.MilitaryRank
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @Serializable
 object HomeRoute : NavKey
@@ -91,6 +94,11 @@ class MainActivity : ComponentActivity() {
         val userPreferencesRepository = UserPreferencesRepository(this)
         val workoutRepository = WorkoutRepository(database.workoutDao(), userPreferencesRepository)
         val programRepository = ProgramRepository(database.programDao())
+
+        // Initialize database with sample data
+        GlobalScope.launch {
+            DatabaseInitializer.initializeDatabase(database.programDao(), database.workoutDao())
+        }
 
         setContent {
             SoldierFitTheme {
