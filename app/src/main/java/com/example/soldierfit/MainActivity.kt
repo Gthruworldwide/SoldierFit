@@ -62,25 +62,25 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Serializable
-object HomeRoute : NavKey
+object DashboardRoute : NavKey
 
 @Serializable
-object WorkoutRoute : NavKey
+object StartWorkoutRoute : NavKey
 
 @Serializable
-object ProgramsRoute : NavKey
+object TrainingPlansRoute : NavKey
 
 @Serializable
-object AnalyticsRoute : NavKey
+object ProgressRoute : NavKey
 
 @Serializable
-object CameraRoute : NavKey
+object AiCoachRoute : NavKey
 
 @Serializable
-object RankLadderRoute : NavKey
+object AchievementsRoute : NavKey
 
 @Serializable
-object ProfileRoute : NavKey
+object SettingsRoute : NavKey
 
 @Serializable
 data class ExerciseDetailRoute(val exerciseId: Long) : NavKey
@@ -102,7 +102,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             SoldierFitTheme {
-                val backStack = rememberNavBackStack(HomeRoute)
+                val backStack = rememberNavBackStack(DashboardRoute)
                 val userXp by userPreferencesRepository.userXp.collectAsStateWithLifecycle(initialValue = 0)
                 val seasonXp by userPreferencesRepository.seasonXp.collectAsStateWithLifecycle(initialValue = 0)
                 val unlockedBadgeIds by userPreferencesRepository.unlockedBadgesIds.collectAsStateWithLifecycle(initialValue = emptySet())
@@ -199,40 +199,34 @@ class MainActivity : ComponentActivity() {
                         if (currentKey !is ExerciseDetailRoute) {
                             NavigationBar {
                                 NavigationBarItem(
-                                    selected = currentKey is HomeRoute,
-                                    onClick = { if (currentKey !is HomeRoute) backStack.add(HomeRoute) },
-                                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                                    label = { Text("HOME") }
+                                    selected = currentKey is DashboardRoute,
+                                    onClick = { if (currentKey !is DashboardRoute) backStack.add(DashboardRoute) },
+                                    icon = { Icon(Icons.Default.Home, contentDescription = "Dashboard") },
+                                    label = { Text("DASHBOARD") }
                                 )
                                 NavigationBarItem(
-                                    selected = currentKey is WorkoutRoute,
-                                    onClick = { if (currentKey !is WorkoutRoute) backStack.add(WorkoutRoute) },
-                                    icon = { Icon(Icons.Default.FitnessCenter, contentDescription = "Workout") },
-                                    label = { Text("LOG") }
+                                    selected = currentKey is StartWorkoutRoute,
+                                    onClick = { if (currentKey !is StartWorkoutRoute) backStack.add(StartWorkoutRoute) },
+                                    icon = { Icon(Icons.Default.FitnessCenter, contentDescription = "Start Workout") },
+                                    label = { Text("WORKOUT") }
                                 )
                                 NavigationBarItem(
-                                    selected = currentKey is ProgramsRoute,
-                                    onClick = { if (currentKey !is ProgramsRoute) backStack.add(ProgramsRoute) },
-                                    icon = { Icon(Icons.Default.List, contentDescription = "Programs") },
-                                    label = { Text("PROGRAMS") }
+                                    selected = currentKey is TrainingPlansRoute,
+                                    onClick = { if (currentKey !is TrainingPlansRoute) backStack.add(TrainingPlansRoute) },
+                                    icon = { Icon(Icons.Default.List, contentDescription = "Training Plans") },
+                                    label = { Text("PLANS") }
                                 )
                                 NavigationBarItem(
-                                    selected = currentKey is AnalyticsRoute,
-                                    onClick = { if (currentKey !is AnalyticsRoute) backStack.add(AnalyticsRoute) },
-                                    icon = { Icon(Icons.Default.Analytics, contentDescription = "Analytics") },
-                                    label = { Text("STATS") }
+                                    selected = currentKey is ProgressRoute,
+                                    onClick = { if (currentKey !is ProgressRoute) backStack.add(ProgressRoute) },
+                                    icon = { Icon(Icons.Default.Analytics, contentDescription = "Progress") },
+                                    label = { Text("PROGRESS") }
                                 )
                                 NavigationBarItem(
-                                    selected = currentKey is CameraRoute,
-                                    onClick = { if (currentKey !is CameraRoute) backStack.add(CameraRoute) },
-                                    icon = { Icon(Icons.Default.CameraAlt, contentDescription = "Camera") },
-                                    label = { Text("CAM") }
-                                )
-                                NavigationBarItem(
-                                    selected = currentKey is ProfileRoute,
-                                    onClick = { if (currentKey !is ProfileRoute) backStack.add(ProfileRoute) },
-                                    icon = { Icon(Icons.Default.AccountCircle, contentDescription = "Profile") },
-                                    label = { Text("PROFILE") }
+                                    selected = currentKey is AiCoachRoute,
+                                    onClick = { if (currentKey !is AiCoachRoute) backStack.add(AiCoachRoute) },
+                                    icon = { Icon(Icons.Default.CameraAlt, contentDescription = "AI Coach") },
+                                    label = { Text("AI COACH") }
                                 )
                             }
                         }
@@ -244,16 +238,16 @@ class MainActivity : ComponentActivity() {
                         onBack = { if (backStack.size > 1) backStack.removeAt(backStack.size - 1) }
                     ) { key ->
                         when (key) {
-                            is HomeRoute -> NavEntry(key) { 
+                            is DashboardRoute -> NavEntry(key) { 
                                 HomeScreen(
                                     rank = userRank,
                                     xp = userXp,
                                     coins = userCoins,
                                     streak = currentStreak,
-                                    onRankLadderClick = { backStack.add(RankLadderRoute) }
+                                    onRankLadderClick = { backStack.add(AchievementsRoute) }
                                 ) 
                             }
-                            is WorkoutRoute -> NavEntry(key) {
+                            is StartWorkoutRoute -> NavEntry(key) {
                                 WorkoutLoggingScreen(
                                     onBack = { backStack.removeAt(backStack.size - 1) },
                                     onExerciseClick = { exerciseId ->
@@ -276,14 +270,14 @@ class MainActivity : ComponentActivity() {
                                     CircularProgressIndicator()
                                 }
                             }
-                            is ProgramsRoute -> NavEntry(key) {
+                            is TrainingPlansRoute -> NavEntry(key) {
                                 val viewModel: ProgramViewModel = viewModel { ProgramViewModel(programRepository) }
                                 val programs by viewModel.programs.collectAsStateWithLifecycle()
                                 ProgramAdaptiveScreen(
                                     programs = programs
                                 )
                             }
-                            is AnalyticsRoute -> NavEntry(key) {
+                            is ProgressRoute -> NavEntry(key) {
                                 val viewModel: WorkoutViewModel = viewModel { WorkoutViewModel(workoutRepository) }
                                 val stats by viewModel.exerciseTrends.collectAsStateWithLifecycle()
                                 val selectedExercise by viewModel.selectedExercise.collectAsStateWithLifecycle()
@@ -293,10 +287,10 @@ class MainActivity : ComponentActivity() {
                                     onExerciseSelected = { viewModel.selectExercise(it) }
                                 )
                             }
-                            is CameraRoute -> NavEntry(key) {
+                            is AiCoachRoute -> NavEntry(key) {
                                 CameraSessionScreen()
                             }
-                            is ProfileRoute -> NavEntry(key) {
+                            is AchievementsRoute -> NavEntry(key) {
                                 MilitaryProfileScreen(
                                     rank = userRank,
                                     xp = userXp,
@@ -308,7 +302,7 @@ class MainActivity : ComponentActivity() {
                                     onBack = { backStack.removeAt(backStack.size - 1) }
                                 )
                             }
-                            is RankLadderRoute -> NavEntry(key) {
+                            is SettingsRoute -> NavEntry(key) {
                                 RankLadderScreen(
                                     currentRank = userRank,
                                     currentXp = userXp,
